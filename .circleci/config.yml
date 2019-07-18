@@ -9,7 +9,7 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +x
-            ls /etc
+            cat /etc/*release
             apk add -quU --no-cache git > /dev/null
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__"
@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Tag test
           command: |
-          cat /etc/*release
+            cat /etc/*release
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__v2"
 
