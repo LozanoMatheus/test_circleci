@@ -16,12 +16,13 @@ jobs:
             echo "GIT_TAG__${GIT_TAG}__"
             . version
             GIT_TAG=2
-            git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
+            ls
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
             else
               GIT_TAG="${KAMUS_CLI_VERSION}-1"
             fi
+            echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
       - run:
           name: Create the tag
           command: |
