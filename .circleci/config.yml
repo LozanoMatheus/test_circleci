@@ -15,48 +15,24 @@ jobs:
             git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
-              sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             else
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-1"
-              sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             fi
+            sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             cat version
-      # - run:
-      #     name: Create the tag
-      #     command: |
-      #       ls -lha
-      #       echo "GIT_TAG__${GIT_TAG}__"
-      # - run:
-      #     name: "What was my custom environment variable?"
-      #     command: |
-      #       echo ${GIT_TAG}
-      #       echo ${MY_ENV_VAR}
-      - persist_to_workspace:
-          root: .
-          paths:
-          - .git
-          - version
-
-
-  release:
-    docker:
-      - image: circleci/golang
-    steps:
-      - attach_workspace:
-          at: .
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
-          name: Tag test
+          name: Create the tag
           command: |
-            cat version || true
-            git status
+            . version
+            git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
+      - run:
+          name: Publish the tag
+          command: |
+            . version
+            git push origin ${KAMUS_CLI_VERSION}
 
 workflows:
   version: 2
   build_and_release:
     jobs:
       - build
-      - release:
-          requires:
-            - build
