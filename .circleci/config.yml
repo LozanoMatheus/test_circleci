@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          docker_layer_caching: false
+          docker_layer_caching: true
       - run:
           name: Check if the tag already exist
           command: |
@@ -18,8 +18,10 @@ jobs:
             git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
+              sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             else
               GIT_TAG="${KAMUS_CLI_VERSION}-1"
+              sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             fi
             echo "GIT_TAG__${GIT_TAG}__"
             echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
@@ -34,13 +36,21 @@ jobs:
           command: |
             echo ${GIT_TAG}
             echo ${MY_ENV_VAR}
-          
+      - persist_to_workspace:
+          root: .
+          paths:
+          - .git
+          - version
+
+
   release:
     docker:
       - image: circleci/golang
     steps:
+      - attach_workspace:
+          at: .
       - setup_remote_docker:
-          docker_layer_caching: false
+          docker_layer_caching: true
       - run:
           name: Tag test
           command: |
@@ -48,6 +58,7 @@ jobs:
             ls -lha
             cat version || true
             echo "GIT_TAG__${GIT_TAG}__v2"
+            git status
 
 workflows:
   version: 2
