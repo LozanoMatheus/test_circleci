@@ -22,7 +22,7 @@ jobs:
               GIT_TAG="${KAMUS_CLI_VERSION}-1"
             fi
             echo "GIT_TAG__${GIT_TAG}__"
-            echo "export GIT_TAG=\"GIT_TAG\"" >> $BASH_ENV
+            echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
             echo 'export MY_ENV_VAR="${GIT_TAG}"' >> $BASH_ENV
       - run:
           name: Create the tag
@@ -31,7 +31,9 @@ jobs:
             echo "GIT_TAG__${GIT_TAG}__"
       - run:
           name: "What was my custom environment variable?"
-          command: echo ${MY_ENV_VAR}
+          command: |
+            echo ${GIT_TAG}
+            echo ${MY_ENV_VAR}
           
   release:
     docker:
