@@ -1,0 +1,2 @@
+DOCKER_IMAGE='node:8-alpine'
+KAMUS_CLI_VERSION='0.2.3-1'
