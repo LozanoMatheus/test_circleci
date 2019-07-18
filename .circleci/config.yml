@@ -14,7 +14,7 @@ jobs:
             echo "GIT_TAG__${GIT_TAG}__"
             . version
             GIT_TAG=2
-            ls
+            git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
             else
