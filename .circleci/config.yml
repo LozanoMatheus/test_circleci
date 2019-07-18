@@ -11,31 +11,26 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +e
-            cat /etc/*release
-            ls -lha
             . version
-            GIT_TAG=2
             git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
               sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             else
-              GIT_TAG="${KAMUS_CLI_VERSION}-1"
+              GIT_TAG="${KAMUS_CLI_VERSION//-*/}-1"
               sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             fi
-            echo "GIT_TAG__${GIT_TAG}__"
-            echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
-            echo 'export MY_ENV_VAR="${GIT_TAG}"' >> $BASH_ENV
-      - run:
-          name: Create the tag
-          command: |
-            ls -lha
-            echo "GIT_TAG__${GIT_TAG}__"
-      - run:
-          name: "What was my custom environment variable?"
-          command: |
-            echo ${GIT_TAG}
-            echo ${MY_ENV_VAR}
+            cat version
+      # - run:
+      #     name: Create the tag
+      #     command: |
+      #       ls -lha
+      #       echo "GIT_TAG__${GIT_TAG}__"
+      # - run:
+      #     name: "What was my custom environment variable?"
+      #     command: |
+      #       echo ${GIT_TAG}
+      #       echo ${MY_ENV_VAR}
       - persist_to_workspace:
           root: .
           paths:
@@ -54,10 +49,7 @@ jobs:
       - run:
           name: Tag test
           command: |
-            cat /etc/*release
-            ls -lha
             cat version || true
-            echo "GIT_TAG__${GIT_TAG}__v2"
             git status
 
 workflows:
