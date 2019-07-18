@@ -10,10 +10,12 @@ jobs:
       - run:
           name: Check if the tag already exist
           command: |
+            set +x
             apk add -quU --no-cache git > /dev/null
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__"
             . version
+            GIT_TAG=2
             git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
             if [[ $? -eq 0 ]]; then
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
@@ -21,15 +23,27 @@ jobs:
               GIT_TAG="${KAMUS_CLI_VERSION}-1"
             fi
             echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
-
       - run:
           name: Create the tag
           command: |
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__"
+          
+  release:
+    docker:
+      - image: alpine:3.10
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Tag test
+          command: |
+            ls -lha
+            echo "GIT_TAG__${GIT_TAG}__v2"
 
 workflows:
   version: 2
   build_and_release:
     jobs:
       - build
+      - release
