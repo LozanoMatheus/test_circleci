@@ -10,6 +10,7 @@ jobs:
       - run:
           name: Check if the tag already exist
           command: |
+            apk add --no-cache git
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__"
             . version
