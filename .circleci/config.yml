@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Check if the tag already exist
           command: |
@@ -38,7 +38,7 @@ jobs:
       - image: circleci/buildpack-deps:stable
     steps:
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Tag test
           command: |
