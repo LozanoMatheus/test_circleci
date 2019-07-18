@@ -22,7 +22,6 @@ jobs:
             else
               GIT_TAG="${KAMUS_CLI_VERSION}-1"
             fi
-            echo "export GIT_TAG=\"${GIT_TAG}\"" >> $BASH_ENV
       - run:
           name: Create the tag
           command: |
