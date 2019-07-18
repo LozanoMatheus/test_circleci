@@ -9,6 +9,7 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +x
+            yum -y -q install git
             cat /etc/*release
             ls -lha
             echo "GIT_TAG__${GIT_TAG}__"
