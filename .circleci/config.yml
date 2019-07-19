@@ -24,6 +24,7 @@ jobs:
       - run:
           name: Publish the tag
           command: |
+            . version
             git config --global user.email "circleci@lozanomatheus.com"
             git config --global user.name "circleci"
             sed -i "s/latest/${KAMUS_CLI_VERSION}/g" README.md
