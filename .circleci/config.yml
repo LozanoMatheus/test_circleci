@@ -27,6 +27,7 @@ jobs:
             echo "foii__${GIT_TAG}___"
             sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             cat version
+
       - run:
           name: Publish the tag
           command: |
