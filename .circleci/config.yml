@@ -12,8 +12,8 @@ jobs:
           command: |
             set +e
             circleci step --help
-            [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI"* ]] && circleci step skip-build
             set -x
+            [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI"* ]] && circleci step halt
             cat version
             env
             . version
@@ -33,8 +33,8 @@ jobs:
       - run:
           name: Publish the tag
           command: |
-            [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI"* ]] && circleci step skip-build
             set -x
+            [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI"* ]] && circleci step halt
             . version
             git config --global user.email "circleci@lozanomatheus.com"
             git config --global user.name "circleci"
