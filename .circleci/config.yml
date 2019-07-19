@@ -29,8 +29,8 @@ jobs:
           name: Publish the tag
           command: |
             . version
-            git config user.email "circleci@lozanomatheus.com"
-            git config user.name "circleci"
+            git config --global user.email "circleci@lozanomatheus.com"
+            git config --global user.name "circleci"
             git add version
             git commit -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
             git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
