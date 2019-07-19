@@ -27,10 +27,15 @@ jobs:
             . version
             git config --global user.email "circleci@lozanomatheus.com"
             git config --global user.name "circleci"
+            sed -i "s/latest/${KAMUS_CLI_VERSION}/g" README.md
             git add version || true
             git commit -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}." || true
+            git push --all
+            git add README.md || true
+            git commit -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}." || true
             git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
-            git push --all --follow-tags
+            git push origin ${KAMUS_CLI_VERSION}
+
       - add_ssh_keys:
           fingerprints:
             - "a1:c3:96:da:35:9d:23:11:ba:31:de:a3:7f:ba:e5:cd"
