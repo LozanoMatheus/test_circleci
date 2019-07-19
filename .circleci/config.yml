@@ -11,6 +11,7 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +e
+            [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI - Version"* ]] && exit 0
             . version
             GIT_TAG_LATEST="$(git tag --list | awk '/'${KAMUS_CLI_VERSION//-*/}'/{ a=$1 ; rc = 1 } END{print a ; exit !rc }')"
             if [[ "${KAMUS_CLI_VERSION//-*/}" == "${GIT_TAG_LATEST//-*/}" ]]; then
