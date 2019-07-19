@@ -11,14 +11,19 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +e
+            set -x
+            cat version
             . version
             GIT_TAG_LATEST="$(git tag --list | awk '/'${KAMUS_CLI_VERSION//-*/}'/{ a=$1 ; rc = 1 } END{print a ; exit !rc }')"
             if [[ "${KAMUS_CLI_VERSION//-*/}" == "${GIT_TAG_LATEST//-*/}" ]]; then
               [[ "${GIT_TAG_LATEST}" != *"-"* ]] && GIT_TAG_LATEST=0
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${GIT_TAG_LATEST//*-/} + 1))"
+              echo "aqui__${GIT_TAG}___"
             else
               GIT_TAG="${KAMUS_CLI_VERSION}"
+              echo "alis__${GIT_TAG}___"
             fi
+            echo "foii__${GIT_TAG}___"
             sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             cat version
       - run:
