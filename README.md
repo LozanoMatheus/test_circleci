@@ -1,5 +1,5 @@
-[![size-vs-layers](https://images.microbadger.com/badges/image/lozanomatheus/docker_kamus_cli:latest.svg)](https://microbadger.com/images/lozanomatheus/docker_kamus_cli:latest "Size vs Layers")
-[![tag-version](https://images.microbadger.com/badges/version/lozanomatheus/docker_kamus_cli:latest.svg)](https://microbadger.com/images/lozanomatheus/docker_kamus_cli:latest "Tag Version")
+[![size-vs-layers](https://images.microbadger.com/badges/image/lozanomatheus/docker_kamus_cli:0.2.7-27.svg)](https://microbadger.com/images/lozanomatheus/docker_kamus_cli:0.2.7-27 "Size vs Layers")
+[![tag-version](https://images.microbadger.com/badges/version/lozanomatheus/docker_kamus_cli:0.2.7-27.svg)](https://microbadger.com/images/lozanomatheus/docker_kamus_cli:0.2.7-27 "Tag Version")
 [![CircleCI_Badge](https://img.shields.io/circleci/build/github/LozanoMatheus/docker_kamus_cli/master.svg?style=plastic)](https://circleci.com/gh/LozanoMatheus/docker_kamus_cli/tree/master)
 
 # Docker image for Kamus CLI
