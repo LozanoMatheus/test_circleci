@@ -11,7 +11,7 @@ jobs:
           name: Check if the tag already exist
           command: |
             set +e
-            circleci --help
+            circleci step --help
             [[ "$(git show -s --format=%B)" == "Releasing Kamus CLI"* ]] && circleci step skip-build
             set -x
             cat version
