@@ -24,7 +24,6 @@ jobs:
       - run:
           name: Publish the tag
           command: |
-            set -x
             . version
             git config --global user.email "circleci@lozanomatheus.com"
             git config --global user.name "circleci"
