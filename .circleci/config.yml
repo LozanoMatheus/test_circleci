@@ -31,6 +31,7 @@ jobs:
             git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
             cat ~/.git-credentials || true
             cat ~/.gitconfig || true
+            git config --global credential.helper foo || true
             # git push --all --follow-tags
 
 workflows:
