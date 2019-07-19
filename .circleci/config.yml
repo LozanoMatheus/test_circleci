@@ -14,7 +14,7 @@ jobs:
             . version
             GIT_TAG_LATEST="$(git tag --list | awk '/'${KAMUS_CLI_VERSION//-*/}'/{ a=$1 ; rc = 1 } END{print a ; exit !rc }')"
             if [[ "${KAMUS_CLI_VERSION//-*/}" == "${GIT_TAG_LATEST//-*/}" ]]; then
-              [[ "${GIT_TAG_LATEST//*-/}" -eq 0 ]] && GIT_TAG_LATEST=0
+              [[ "${GIT_TAG_LATEST}" != *"-"* ]] && GIT_TAG_LATEST=0
               GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${GIT_TAG_LATEST//*-/} + 1))"
             else
               GIT_TAG="${KAMUS_CLI_VERSION}"
