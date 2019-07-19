@@ -29,7 +29,9 @@ jobs:
             git add version
             git commit -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
             git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
-            git push --all --follow-tags
+            cat ~/.git-credentials || true
+            cat ~/.gitconfig || true
+            # git push --all --follow-tags
 
 workflows:
   version: 2
