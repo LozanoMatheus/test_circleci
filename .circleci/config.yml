@@ -21,11 +21,6 @@ jobs:
             sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             cat version
       - run:
-          name: Create the tag
-          command: |
-            . version
-            git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
-      - run:
           name: Publish the tag
           command: |
             . version
