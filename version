@@ -1,6 +1,2 @@
 DOCKER_IMAGE='node:8-alpine'
-<<<<<<< HEAD
 KAMUS_CLI_VERSION=0.2.6
-=======
-KAMUS_CLI_VERSION=0.2.5-5
->>>>>>> 150f49f4324321e91e871cb6079b65d95dbeb90d
