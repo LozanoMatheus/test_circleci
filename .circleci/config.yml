@@ -12,11 +12,11 @@ jobs:
           command: |
             set +e
             . version
-            git ls-remote --exit-code origin refs/tags/${KAMUS_CLI_VERSION}
-            if [[ $? -eq 0 ]]; then
-              GIT_TAG="${KAMUS_CLI_VERSION//-*/}-$((${KAMUS_CLI_VERSION//*-/} + 1))"
+            GIT_TAG_LATEST="$(git tag --list | awk '/'${KAMUS_CLI_VERSION//-*/}'/{ a=$1 ; rc = 1 } END{print a ; exit !rc }')"
+            if [[ "${KAMUS_CLI_VERSION//-*/}" == "${GIT_TAG_LATEST//-*/}" ]]; then
+              GIT_TAG="${GIT_TAG_LATEST//-*/}-$((${GIT_TAG_LATEST//*-/} + 1))"
             else
-              GIT_TAG="${KAMUS_CLI_VERSION//-*/}-1"
+              GIT_TAG="${KAMUS_CLI_VERSION}"
             fi
             sed -i "s/\(KAMUS_CLI_VERSION\).*/\1=${GIT_TAG}/g" version
             cat version
@@ -29,7 +29,12 @@ jobs:
           name: Publish the tag
           command: |
             . version
-            git push origin ${KAMUS_CLI_VERSION}
+            git config user.email "circleci@lozanomatheus.com"
+            git config user.name "circleci"
+            git add version
+            git commit -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
+            git tag -a ${KAMUS_CLI_VERSION} -m "Releasing Kamus CLI - Version ${KAMUS_CLI_VERSION}."
+            git push --all --follow-tags
 
 workflows:
   version: 2
